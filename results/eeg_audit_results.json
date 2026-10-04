@@ -1,0 +1,28 @@
+{
+  "event_counts": {
+    "Keystroke": 146556,
+    "Word": 46241,
+    "Sentence": 3963,
+    "Eeg": 62
+  },
+  "per_subject": {
+    "8": 9833, "4": 9734, "16": 9713, "0": 9683, "13": 9640,
+    "11": 9631, "18": 9557, "10": 9469, "7": 9345, "5": 9020,
+    "9": 7066, "15": 6907, "3": 6831, "2": 4838, "12": 4825,
+    "14": 4760, "19": 4645, "17": 4612, "1": 4380, "6": 2067
+  },
+  "splits": {
+    "train": {"keystrokes": 116755, "subjects": 20},
+    "val":   {"keystrokes": 14249,  "subjects": 20},
+    "test":  {"keystrokes": 15552,  "subjects": 20}
+  },
+  "subject_overlap": {
+    "train_and_test": 20,
+    "test_not_train": 0
+  },
+  "merger": {
+    "shipped_n_virtual_channels": 270,
+    "eeg_electrodes": 61,
+    "expansion_factor": 4.43
+  }
+}

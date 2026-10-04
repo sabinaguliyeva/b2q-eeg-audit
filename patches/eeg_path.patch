@@ -1,0 +1,24 @@
+Subject: [PATCH] make the subject LabelEncoder modality-aware
+
+brain2qwerty_v1/main.py hardcodes event_types="Meg" in the subject
+LabelEncoder. On the registered Pinet2024Eeg study the event type is
+"Eeg", so the encoder matches zero events and Data.build() raises
+ValueError: No events found for LabelEncoder before training starts.
+
+This infers the modality from the extractor instead.
+
+--- a/brain2qwerty_v1/main.py
++++ b/brain2qwerty_v1/main.py
+@@ -68,7 +68,11 @@ class Data(pydantic.BaseModel):
+         self.neuro.prepare(events)
+         self.feature.prepare(events)
+ 
+-        subject_id = ns.extractors.LabelEncoder(event_types="Meg", event_field="subject")
++        # the neuro extractor knows which modality it reads; don't assume MEG
++        modality = getattr(self.neuro, "event_types", None) or (
++            "Eeg" if type(self.neuro).__name__.startswith("Eeg") else "Meg"
++        )
++        subject_id = ns.extractors.LabelEncoder(event_types=modality, event_field="subject")
+         subject_id.prepare(events)
+         channel_positions = ChannelPositions2D(neuro=self.neuro)
+         channel_positions.prepare(events)
